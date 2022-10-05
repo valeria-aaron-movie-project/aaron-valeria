@@ -4,17 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Movie Project</title>
-    <script src=".idea/js/jquery-3.6.1.js"></script>
+    <script src="js/jquery-3.6.1.js"></script>
     <script src="movie-project.js"></script>
     <link rel="stylesheet" href="movie-project.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 </head>
 <body>
-<div class="container-fluid my-4 bg-light rounded-3 py-5"  id="main-heading">
-    <h1 class="display-2 text-center bg-light bg-opacity-75">Movies App</h1>
+<!--page wrapper for background image and overlay content on-->
+<div class="page-wrapper display-flex flex-direction-col">
+
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Movie App</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link" href="#">Pricing</a>
+                    <a class="nav-link disabled">Disabled</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!--Div for main content-->
+    <div class="main">
+        <div class="movie-layout">
+            <div class="movie-card">
+                <div class="movie-pic-wrapper">
+                    <img class="movie-pic" src="https://m.media-amazon.com/images/M/MV5BYWMwMzQxZjQtODM1YS00YmFiLTk1YjQtNzNiYWY1MDE4NTdiXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX300.jpg" />
+                </div>
+                <h3 class="title">
+                    Black Hawk Down
+                </h3>
+                <div class="movie-year">Released 2001</div>
+            </div>
+            <div class="movie-card"></div>
+            <div class="movie-card"></div>
+            <div class="movie-card"></div>
+            <div class="movie-card"></div>
+
+        </div>
+
+    </div>
 
 
-
+</div>
 <script src="js/movie-project.js"></script>
 </body>
 </html>

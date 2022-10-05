@@ -1,5 +1,14 @@
 $(function(){
-
+    <div className="movie-card">
+        <div className="movie-pic-wrapper">
+            <img className="movie-pic"
+                 src="https://m.media-amazon.com/images/M/MV5BYWMwMzQxZjQtODM1YS00YmFiLTk1YjQtNzNiYWY1MDE4NTdiXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX300.jpg"/>
+        </div>
+        <h3 className="title">
+            Black Hawk Down
+        </h3>
+        <div className="movie-year">Released 2001</div>
+    </div>
     //variables for books and movies
     const booksURL = "https://jet-sudden-pamphlet.glitch.me/books";
     const moviesURL = "https://jet-sudden-pamphlet.glitch.me/movies";
