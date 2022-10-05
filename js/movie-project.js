@@ -1,25 +1,48 @@
-$(function(){
-    <div className="movie-card">
-        <div className="movie-pic-wrapper">
-            <img className="movie-pic"
-                 src="https://m.media-amazon.com/images/M/MV5BYWMwMzQxZjQtODM1YS00YmFiLTk1YjQtNzNiYWY1MDE4NTdiXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX300.jpg"/>
-        </div>
-        <h3 className="title">
-            Black Hawk Down
-        </h3>
-        <div className="movie-year">Released 2001</div>
-    </div>
+
+    // <div className="movie-card">
+    //     <div className="movie-pic-wrapper">
+    //         <img className="movie-pic"
+    //              src="https://m.media-amazon.com/images/M/MV5BYWMwMzQxZjQtODM1YS00YmFiLTk1YjQtNzNiYWY1MDE4NTdiXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX300.jpg"/>
+    //     </div>
+    //     <h3 className="title">
+    //         Black Hawk Down
+    //     </h3>
+    //     <div className="movie-year">Released 2001</div>
+    // </div>
     //variables for books and movies
     const booksURL = "https://jet-sudden-pamphlet.glitch.me/books";
     const moviesURL = "https://jet-sudden-pamphlet.glitch.me/movies";
 
 //function to get movies
-    function getMovies(){
-        fetch("https://jet-sudden-pamphlet.glitch.me/movies")
-            .then(resp => resp.json()).then(data =>console.log(data));
+
+    buildMovies();
+
+    async function buildMovies(){
+        let movies = await getMovies();
+        console.log(movies);
+        let moviesHTML = movies.map((movie, index) => {
+            return `
+                <div class="movie-card">
+                    <div class="movie-pic-wrapper">
+                        <img class="movie-pic" src="https://m.media-amazon.com/images/M/MV5BYWMwMzQxZjQtODM1YS00YmFiLTk1YjQtNzNiYWY1MDE4NTdiXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX300.jpg" />
+                    </div>
+                    <h3 class="title">
+                        ${movie.title}
+                    </h3>
+                    <div class="movie-year">Released 2001</div>
+                </div>
+            `
+            $('.movies-layout').append(moviesHTML)
+        });
+
     }
 
-    getMovies();
+    async function getMovies(){
+        let response = await fetch("https://jet-sudden-pamphlet.glitch.me/movies");
+        let data = await response.text();
+        data = JSON.parse(data)
+        return data;
+    }
 
 //The C in CRUD: Create
 //Creating posts
@@ -39,11 +62,13 @@ $(function(){
         body: JSON.stringify(bookToPost)
     }
 
-    function getBooks(){
-        fetch(booksURL)
-            .then(resp => resp.json()).then(data =>console.log(data));
-    }
-    getBooks();
+    // function getBooks(){
+    //     fetch(booksURL)
+    //         .then(resp => resp.json()).then(data =>console.log(data));
+    // }
+    // getBooks();
+
+
 
 //POST request
 // fetch(booksURL, postOptions).then(getBooks);
@@ -92,7 +117,7 @@ $(function(){
 // }
 // fetch(booksURL + "/1", deleteOptions).then(getBooks);
 
-});
+
 
 
 
