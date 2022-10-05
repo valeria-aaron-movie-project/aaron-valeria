@@ -70,4 +70,3 @@ const patchDown = {
 fetch(moviesURL+ "/2", patchDown).then(getMovies);
 fetch(moviesURL+ "/3", patchTenet).then(getMovies);
 fetch(moviesURL+ "/4", patchEvil).then(getMovies);
-
