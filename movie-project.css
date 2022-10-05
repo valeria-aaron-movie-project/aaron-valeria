@@ -1,0 +1,13 @@
+body {
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    /*align-items: flex-start;*/
+    height: 100vh;
+    margin: 0;
+    background-image: url('https://source.unsplash.com/1600x900/?movies');
+    font-family: 'Open Sans', sans-serif;
+}
+
+#main-heading{
+    opacity: 75%;
+}
