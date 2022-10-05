@@ -10,6 +10,11 @@
     position: relative;
 }
 
+.movienav {
+    position: relative;
+    z-index: 9;
+}
+
 #main-heading{
     opacity: 75%;
 }
