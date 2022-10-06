@@ -75,15 +75,15 @@ $(document).on("click", ".delete-movie", function(){
 });
 
 //Adding a Movie
-$('#submit-movie-name').click(function(e){
+$(document).on('click', "#add-movie-button",function(e){
+    console.log("test inside add movie button");
     e.preventDefault();
-    let userInput = $(".add-info").val()
-    let movieTitle = $(".movie-add-title").val()
-    let movieRating = $(".movie-rating").val()
+    // let userInput = $(".add-info").val()
+    let movieTitle = $("#movie-add-title").val()
+    let movieRating = $(".movie-rating[name='rating']:checked").val()
     let movieYear = $("#movie-add-year").val()
     let movieGenre = $("#movie-add-genre").val()
     let moviePlot = $("#movie-add-plot").val()
-
 
     //userInput = postTitle(userInput);
     userInput = {
@@ -91,9 +91,9 @@ $('#submit-movie-name').click(function(e){
         "rating": movieRating,
         "year": movieYear,
         "genre": movieGenre,
-        "plot": moviePlot,
-        "id": ""
+        "plot": moviePlot
     }
+    console.log(userInput);
     fetch(url,  {
         method: "POST",
         headers: {
@@ -103,19 +103,20 @@ $('#submit-movie-name').click(function(e){
     })
         .then(response => response.json())
         .then(movies =>{
-            let movieInfo = movies.map(movie => movie.title);
-            console.log(movieInfo);
-            if (!movieTitles.includes(userInput)) {
-                fetch(`https://wide-past-waltz.glitch.me/movies`)
-                    .then(response => response.json())
-                    .then(result => {
-                        let getInfo = {
-                            title: result.title,
-                            rating: result.rating
-                        }
-                        console.log(getInfo);
-                    });
-            }
+            console.log(movies);
+            // let movieInfo = movies.map(movie => movie.title);
+            // console.log(movieInfo);
+            // if (!movieTitles.includes(userInput)) {
+            //     fetch(`https://wide-past-waltz.glitch.me/movies`)
+            //         .then(response => response.json())
+            //         .then(result => {
+            //             let getInfo = {
+            //                 title: result.title,
+            //                 rating: result.rating
+            //             }
+            //             console.log(getInfo);
+            //         });
+            // }
         });
 });
 
@@ -149,6 +150,7 @@ $('#modal-div').submit((e) => {
         }).catch(error => console.log(error))
 
 });
+
 //Function to get movies from array
 async function getMovies() {
     try {
