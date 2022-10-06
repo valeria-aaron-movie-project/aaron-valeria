@@ -129,7 +129,6 @@ async function buildMovies(){
                 <div class="movie-year">Released: ${movie.year}</div>
                 <button class="delete-movie">Delete</button>
                 <button class="edit-movie">Edit</button>
-                <input type="text" class="edit-content"></input>
             </div>`
         return movieCard;
     });
