@@ -1,7 +1,8 @@
 const moviesURL = "https://wide-past-waltz.glitch.me/movies";
 
-//Beginning of Patch work
+let movieData = [];
 
+//Beginning of Patch work
 let modifyEvil = {
     title: "Resident Evil"
 
@@ -57,6 +58,8 @@ const deleteOptions = {
     }
 }
 
+
+
 buildMovies()
 
 fetch(moviesURL+ "/2", patchDown).then(getMovies);
@@ -71,11 +74,81 @@ $(document).on("click", ".delete-movie", function(){
     deleteMovie(movieID)
 });
 
-//Event listening for edit button
-$(document).on('click', ".add-movie", function(){
-console.log("hello");
+//Adding a Movie
+$('#submit-movie-name').click(function(e){
+    e.preventDefault();
+    let userInput = $(".add-info").val()
+    let movieTitle = $(".movie-add-title").val()
+    let movieRating = $(".movie-rating").val()
+    let movieYear = $("#movie-add-year").val()
+    let movieGenre = $("#movie-add-genre").val()
+    let moviePlot = $("#movie-add-plot").val()
+
+
+    //userInput = postTitle(userInput);
+    userInput = {
+        "title": movieTitle,
+        "rating": movieRating,
+        "year": movieYear,
+        "genre": movieGenre,
+        "plot": moviePlot,
+        "id": ""
+    }
+    fetch(url,  {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userInput)
+    })
+        .then(response => response.json())
+        .then(movies =>{
+            let movieInfo = movies.map(movie => movie.title);
+            console.log(movieInfo);
+            if (!movieTitles.includes(userInput)) {
+                fetch(`https://wide-past-waltz.glitch.me/movies`)
+                    .then(response => response.json())
+                    .then(result => {
+                        let getInfo = {
+                            title: result.title,
+                            rating: result.rating
+                        }
+                        console.log(getInfo);
+                    });
+            }
+        });
 });
 
+
+// Change #form1 to the id of the form that houses your input fields
+$('#modal-div').submit((e) => {
+    e.preventDefault();
+
+    let addMovie = {
+        title: $("#movie-add-title").val(), // change
+        genre: $("#movie-add-genre").val(), // change
+        rating: $(".movie-rating").val(), // change
+        plot: $("#movie-add-plot").val(), //change
+    }
+    console.log("this is the add movie log")
+    console.log(addMovie)
+
+    let postOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(addMovie)
+    }
+    // POST movie
+
+    fetch(moviesURL, postOptions)
+        .then(resp => resp.json())
+        .then(moviePosters => {
+            console.log(moviePosters);
+        }).catch(error => console.log(error))
+
+});
 //Function to get movies from array
 async function getMovies() {
     try {
@@ -110,9 +183,14 @@ async function buildMovies(){
     $(".movie-layout").html(moviesHTML);
 }
 
+//Function to delete movie
 async function deleteMovie(movieID){
     await fetch(moviesURL + `/${movieID}`, deleteOptions).then(results => results);
     buildMovies();
 }
+
+
+
+
 
 
