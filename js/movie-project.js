@@ -1,17 +1,10 @@
 let moviesURL = "https://wide-past-waltz.glitch.me/movies";
-
 let movieData = [];
 
-const deleteOptions = {
-    method: 'DELETE',
-    headers: {
-        'Content-Type' : 'application/json'
-    }
-}
-
+// Loading movies
 $(document).ready(function(){
     console.log("Document is Ready")
-    buildMovies()
+    buildMovies();
 });
 
 //Event listening for delete button
@@ -21,7 +14,23 @@ $(document).on("click", ".delete-movie", function(){
     deleteMovie(movieID)
 });
 
-//Adding a Movie
+// Global variable for option to delete
+const deleteOptions = {
+    method: 'DELETE',
+    headers: {
+        'Content-Type' : 'application/json'
+    }
+}
+
+//Variable for option to edit
+const editOption = {
+    method: 'PATCH',
+    headers: {
+        'Content-Type' : 'application/json'
+    }
+}
+
+//Adding a Movie with event listener and POST option
 $(document).on('click', "#add-movie-button",function(e){
     $("[data-bs-dismiss=\"modal\"]").trigger("click");
     console.log("test inside add movie button");
@@ -50,27 +59,20 @@ $(document).on('click', "#add-movie-button",function(e){
         body: JSON.stringify(userInput)
     })
         .then(response => response.json())
-        .then(movies =>{
+        .then(movies => {
             console.log(movies);
             buildMovies();
-            // let movieInfo = movies.map(movie => movie.title);
-            // console.log(movieInfo);
-            // if (!movieTitles.includes(userInput)) {
-            //     fetch(`https://wide-past-waltz.glitch.me/movies`)
-            //         .then(response => response.json())
-            //         .then(result => {
-            //             let getInfo = {
-            //                 title: result.title,
-            //                 rating: result.rating
-            //             }
-            //             console.log(getInfo);
-            //         });
-            // }
-        });
+        })
 });
 
+//EDIT = Update
+$(document).on('click', ".edit-movie", function() {
+    let $parentCard = $(this).parents(".movie-card");
+    let changeTitle=$parentCard.find(".movie-title").text();
+    let changeYear=$parentCard.find(".movie-year").text();
+});
 
-// Change #form1 to the id of the form that houses your input fields
+// Modal that contains user input for a movie
 $('#modal-div').submit((e) => {
     e.preventDefault();
 
@@ -90,8 +92,8 @@ $('#modal-div').submit((e) => {
         },
         body: JSON.stringify(addMovie)
     }
-    // POST movie
 
+    // POST movie
     fetch(moviesURL, postOptions)
         .then(resp => resp.json())
         .then(moviePosters => {
@@ -123,13 +125,12 @@ async function buildMovies(){
                 <div class="movie-pic-wrapper">
                     <img class="movie-pic" src="${movie.poster}" />
                 </div>
-                <h3 class="title">
+                <h3 class="movie-title">
                     ${movie.title}
                 </h3>
                 <div class="movie-year">Released: ${movie.year}</div>
                 <button class="delete-movie">Delete</button>
                 <button class="edit-movie">Edit</button>
-                <input type="text" class="edit-content"></input>
             </div>`
         return movieCard;
     });
@@ -141,6 +142,7 @@ async function deleteMovie(movieID){
     await fetch(moviesURL + `/${movieID}`, deleteOptions).then(results => results);
     buildMovies();
 }
+
 
 
 
