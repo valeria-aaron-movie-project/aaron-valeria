@@ -1,121 +1,147 @@
+let moviesURL = "https://wide-past-waltz.glitch.me/movies";
 
-    // <div className="movie-card">
-    //     <div className="movie-pic-wrapper">
-    //         <img className="movie-pic"
-    //              src="https://m.media-amazon.com/images/M/MV5BYWMwMzQxZjQtODM1YS00YmFiLTk1YjQtNzNiYWY1MDE4NTdiXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX300.jpg"/>
-    //     </div>
-    //     <h3 className="title">
-    //         Black Hawk Down
-    //     </h3>
-    //     <div className="movie-year">Released 2001</div>
-    // </div>
-    //variables for books and movies
-    const booksURL = "https://jet-sudden-pamphlet.glitch.me/books";
-    const moviesURL = "https://jet-sudden-pamphlet.glitch.me/movies";
+let movieData = [];
 
-//function to get movies
+const deleteOptions = {
+    method: 'DELETE',
+    headers: {
+        'Content-Type' : 'application/json'
+    }
+}
 
-    buildMovies();
+$(document).ready(function(){
+    console.log("Document is Ready")
+    buildMovies()
+});
 
-    async function buildMovies(){
-        let movies = await getMovies();
-        console.log(movies);
-        let moviesHTML = movies.map((movie, index) => {
-            return `
-                <div class="movie-card">
-                    <div class="movie-pic-wrapper">
-                        <img class="movie-pic" src="https://m.media-amazon.com/images/M/MV5BYWMwMzQxZjQtODM1YS00YmFiLTk1YjQtNzNiYWY1MDE4NTdiXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX300.jpg" />
-                    </div>
-                    <h3 class="title">
-                        ${movie.title}
-                    </h3>
-                    <div class="movie-year">Released 2001</div>
-                </div>
-            `
-            $('.movies-layout').append(moviesHTML)
+//Event listening for delete button
+$(document).on("click", ".delete-movie", function(){
+    let movieID=$(this).parents(".movie-card").attr("data-id")
+    console.log(movieID);
+    deleteMovie(movieID)
+});
+
+//Adding a Movie
+$(document).on('click', "#add-movie-button",function(e){
+    $("[data-bs-dismiss=\"modal\"]").trigger("click");
+    console.log("test inside add movie button");
+    e.preventDefault();
+    // let userInput = $(".add-info").val()
+    let movieTitle = $("#movie-add-title").val()
+    let movieRating = $(".movie-rating[name='rating']:checked").val()
+    let movieYear = $("#movie-add-year").val()
+    let movieGenre = $("#movie-add-genre").val()
+    let moviePlot = $("#movie-add-plot").val()
+
+    //userInput = postTitle(userInput);
+    userInput = {
+        "title": movieTitle,
+        "rating": movieRating,
+        "year": movieYear,
+        "genre": movieGenre,
+        "plot": moviePlot
+    }
+    console.log(userInput);
+    fetch(moviesURL,  {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userInput)
+    })
+        .then(response => response.json())
+        .then(movies =>{
+            console.log(movies);
+            buildMovies();
+            // let movieInfo = movies.map(movie => movie.title);
+            // console.log(movieInfo);
+            // if (!movieTitles.includes(userInput)) {
+            //     fetch(`https://wide-past-waltz.glitch.me/movies`)
+            //         .then(response => response.json())
+            //         .then(result => {
+            //             let getInfo = {
+            //                 title: result.title,
+            //                 rating: result.rating
+            //             }
+            //             console.log(getInfo);
+            //         });
+            // }
         });
+});
 
+
+// Change #form1 to the id of the form that houses your input fields
+$('#modal-div').submit((e) => {
+    e.preventDefault();
+
+    let addMovie = {
+        title: $("#movie-add-title").val(), // change
+        genre: $("#movie-add-genre").val(), // change
+        rating: $(".movie-rating").val(), // change
+        plot: $("#movie-add-plot").val(), //change
     }
+    console.log("this is the add movie log")
+    console.log(addMovie)
 
-    async function getMovies(){
-        let response = await fetch("https://jet-sudden-pamphlet.glitch.me/movies");
-        let data = await response.text();
-        data = JSON.parse(data)
-        return data;
-    }
-
-//The C in CRUD: Create
-//Creating posts
-    const bookToPost = {
-        title: "Greenlights",
-        author: {
-            firstName: "Matthew",
-            lastName: "McConaughey"
-        }
-    }
-
-    const postOptions = {
+    let postOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(bookToPost)
+        body: JSON.stringify(addMovie)
     }
+    // POST movie
 
-    // function getBooks(){
-    //     fetch(booksURL)
-    //         .then(resp => resp.json()).then(data =>console.log(data));
-    // }
-    // getBooks();
+    fetch(moviesURL, postOptions)
+        .then(resp => resp.json())
+        .then(moviePosters => {
+            console.log(moviePosters);
+            buildMovies();
+        }).catch(error => console.log(error))
 
+});
 
-
-//POST request
-// fetch(booksURL, postOptions).then(getBooks);
-
-//The U in CRUD: Updating with PUT and PATCH requests
-//We'll use PUT to replace the entire content
-//We'll use PATCH to modify only part of the entry
-
-    let modification = {
-        title: "Greenlights: Blocking every red on the road"
+//Function to get movies from array
+async function getMovies() {
+    try {
+        let response = await fetch(`https://wide-past-waltz.glitch.me/movies`);
+        let events = await response.json();
+        return(events);
     }
-    const patchOptions = {
-        method: 'PATCH',
-        headers: {
-            'Content-Type' : 'applications/json'
-        },
-        body: JSON.stringify(modification)
+    catch(err) {
+        console.log(err);
     }
+}
+//Function to build movie cards
+async function buildMovies(){
+    console.log("Running BuildMovies")
+    let movies = await getMovies()
+    console.log(movies);
+    let moviesHTML = movies.map(function(movie, index) {
+        let movieCard =
+                `<div class="movie-card" data-id="${movie.id}">
+                <div class="movie-pic-wrapper">
+                    <img class="movie-pic" src="${movie.poster}" />
+                </div>
+                <h3 class="title">
+                    ${movie.title}
+                </h3>
+                <div class="movie-year">Released: ${movie.year}</div>
+                <button class="delete-movie">Delete</button>
+                <button class="edit-movie">Edit</button>
+                <input type="text" class="edit-content"></input>
+            </div>`
+        return movieCard;
+    });
+    $(".movie-layout").html(moviesHTML);
+}
 
-// fetch(booksURL + "/1", patchOptions).then(getBooks);
-    modification = {
-        title: "The Big Nine",
-        author: {
-            firstName: "Amy",
-            lastName: "Webb"
-        }
-    }
+//Function to delete movie
+async function deleteMovie(movieID){
+    await fetch(moviesURL + `/${movieID}`, deleteOptions).then(results => results);
+    buildMovies();
+}
 
-// const putOptions = {
-//     method: 'PATCH',
-//     headers: {
-//         'Content-Type' : 'applications/json'
-//     },
-//     body: JSON.stringify(modification)
-// }
-//
-// fetch(booksURL + "/1", putOptions).then(getBooks);
-
-//The D in CRUD: Delete
-
-// const deleteOptions = {
-//     method: 'DELETE',
-//     headers: {
-//         'Content-Type' : 'applications/json'
-//     },
-// }
-// fetch(booksURL + "/1", deleteOptions).then(getBooks);
 
 
 
