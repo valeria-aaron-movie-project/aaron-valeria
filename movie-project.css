@@ -5,9 +5,11 @@
     /*align-items: flex-start;*/
     min-height: 100vh;
     margin: 0;
-    background-image: url('https://source.unsplash.com/1600x900/?movies');
+    background-image: url('https://source.unsplash.com/1600x900/?cinema');
     font-family: 'Open Sans', sans-serif;
     position: relative;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .movienav {
@@ -15,9 +17,9 @@
     z-index: 9;
 }
 
-#main-heading{
-    opacity: 75%;
-}
+/*#main-heading{*/
+/*    opacity: 75%;*/
+/*}*/
 
 .main {
     display: flex;
