@@ -1,4 +1,4 @@
-const moviesURL = "https://jet-sudden-pamphlet.glitch.me/movies";
+const moviesURL = "https://wide-past-waltz.glitch.me/movies";
 
 //Beginning of Patch work
 
@@ -71,10 +71,15 @@ $(document).on("click", ".delete-movie", function(){
     deleteMovie(movieID)
 });
 
+//Event listening for edit button
+$(document).on('click', ".add-movie", function(){
+console.log("hello");
+});
+
 //Function to get movies from array
 async function getMovies() {
     try {
-        let response = await fetch(`https://jet-sudden-pamphlet.glitch.me/movies`);
+        let response = await fetch(`https://wide-past-waltz.glitch.me/movies`);
         let events = await response.json();
         return(events);
     }
@@ -97,6 +102,8 @@ async function buildMovies(){
                 </h3>
                 <div class="movie-year">Released: ${movie.year}</div>
                 <button class="delete-movie">Delete</button>
+                <button class="edit-movie">Edit</button>
+                <input type="text" class="edit-content"></input>
             </div>`
         return movieCard;
     });
