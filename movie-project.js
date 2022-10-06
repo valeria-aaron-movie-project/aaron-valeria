@@ -1,7 +1,6 @@
 const moviesURL = "https://jet-sudden-pamphlet.glitch.me/movies";
 
 //Beginning of Patch work
-
 let modifyEvil = {
     title: "Resident Evil"
 
