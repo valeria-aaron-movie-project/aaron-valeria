@@ -37,6 +37,7 @@
     row-gap: 20px;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 100px;
 }
 
 .movie-card {
@@ -76,3 +77,11 @@
 .add-info {
     width: 100%;
 }
+
+#text-color{
+    color: #FFFFFF;
+}
+.hidden-form{
+    display: none;
+}
+

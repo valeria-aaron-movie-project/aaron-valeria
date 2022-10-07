@@ -14,6 +14,12 @@ $(document).on("click", ".delete-movie", function(){
     deleteMovie(movieID)
 });
 
+$(document).on("click", ".edit-movie", function(){
+    let movieID=$(this).parents(".movie-card").attr("data-id")
+    console.log(movieID);
+    editMovie(movieID)
+});
+
 // Global variable for option to delete
 const deleteOptions = {
     method: 'DELETE',
@@ -22,13 +28,8 @@ const deleteOptions = {
     }
 }
 
-//Variable for option to edit
-const editOption = {
-    method: 'PATCH',
-    headers: {
-        'Content-Type' : 'application/json'
-    }
-}
+
+
 
 //Adding a Movie with event listener and POST option
 $(document).on('click', "#add-movie-button",function(e){
@@ -116,7 +117,6 @@ async function getMovies() {
 }
 //Function to build movie cards
 async function buildMovies(){
-    console.log("Running BuildMovies")
     let movies = await getMovies()
     console.log(movies);
     let moviesHTML = movies.map(function(movie, index) {
@@ -130,8 +130,8 @@ async function buildMovies(){
                 </h3>
                 <div class="movie-year">Released: ${movie.year}</div>
                 <button class="delete-movie">Delete</button>
-                <button class="edit-movie">Edit</button>
-            </div>`
+                <button class="edit-movie" data-bs-toggle="modal" data-bs-target="#modal-div">Edit</button>
+            </div> `
         return movieCard;
     });
     $(".movie-layout").html(moviesHTML);
@@ -142,8 +142,38 @@ async function deleteMovie(movieID){
     await fetch(moviesURL + `/${movieID}`, deleteOptions).then(results => results);
     buildMovies();
 }
+//Variable for option to edit
+async function editMovie(movieID){
+    getMovies().then(movies =>{
+        for(let movie of movies){
+           if(movie.id === parseInt(movieID)){
+               $("#movie-add-title").attr("value", movie.title)
+               $("#movie-add-year").attr("value", movie.year)
+               $("#add-movie-button").attr("id", "edit-movie-button")
+           }
+       }
+    });
+        $(document.body).on("click", "#edit-movie-button", function(){
+            let newMovie = {
+                title:  $("#movie-add-title").val(),
+                year:   $("#movie-add-year").val()
+            }
+            const editOption = {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type' : 'application/json'
+                },
+                body: JSON.stringify(newMovie)
+            }
+            fetch(moviesURL + `/${movieID}`, editOption)
+                .then(results => results.json())
+                .then(data => {
+                    buildMovies();
+                });
 
+        })
 
+}
 
 
 

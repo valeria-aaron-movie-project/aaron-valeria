@@ -16,18 +16,13 @@
     <!--Navbar-->
     <nav class="navbar bg-dark opacity-50 movienav">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Movie App</a>
+            <a class="navbar-brand" href="#"><text id="text-color"><h3>Cinema Application</h3></text></a>
             <button class="navbar-toggler bg-light opacity-50" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    <a class="nav-link" role="button" href="#modal-div" data-bs-toggle="modal">Add</a>
-<<<<<<< HEAD
-                    <a class="nav-link" href="#">Edit</a>
-=======
->>>>>>> 2b61a2f8241f0d31e79405ff675cb94f4538d9ad
+                    <a class="nav-link" role="button" href="#modal-div" data-bs-toggle="modal"><text id="text-color">ADD Movie</text></a>
                 </div>
             </div>
         </div>
@@ -39,34 +34,19 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="add-movielabel">Add Movie</h5>
+                    <h5 class="modal-title" id="add-movielabel">ADD A Film</h5>
                     <button type="button" class="btn-close submit-movie-name" id= "add-me" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
 
                     <!--Form to be Added-->
+
+
 <!--                    <form class="add-movie">-->
                         <input type="text" class="add-info" id="movie-add-title">Title
                         <label for="modal-div"></label>
                         <input type="text" class="add-info" id="movie-add-year"> Year
                         <label for="movie-add-year"></label>
-                            <select id="movie-add-genre">
-                                <option>Scifi</option>
-                                <option>Comedy</option>
-                                <option>Thriller</option>
-                                <option>Drama</option>
-                                <option>Romance</option>
-                                <options>Action</options>
-                                <options>Horror</options>
-                            </select>
-                            <br> Rating
-                                <input type="radio" name="rating" class="movie-rating" value="1"> 1
-                                <input type="radio" name="rating" class="movie-rating" value="2"> 2
-                                <input type="radio" name="rating" class="movie-rating" value="3"> 3
-                                <input type="radio" name="rating" class="movie-rating" value="4"> 4
-                                <input type="radio" name="rating" class="movie-rating" value="5"> 5
-                            <br>
-                           Plot: <textarea id="movie-add-plot"></textarea>
                         <div class="modal-footer">
                             <button type= "button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary add-here" id="add-movie-button">Add Here</button>
