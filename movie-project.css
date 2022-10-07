@@ -17,6 +17,14 @@
     z-index: 9;
 }
 
+.modal-body{
+    background-color: #00000080;
+
+
+}
+.modal-header{
+    background-color: #00000080;
+}
 /*#main-heading{*/
 /*    opacity: 75%;*/
 /*}*/
